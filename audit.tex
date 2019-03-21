@@ -80,7 +80,14 @@ Port Number & State & Service & Version \\
 
 \section{Vulnerability Identification}
 \paragraph{}
-Lorem ipsum.
+The following services on the target machine had exploitable vulnerabilities:
+
+\subsection{ProFTPD 1.3.5}
+\paragraph{}
+Version 1.3.5 of ProFTPD allows attackers to read and write to arbitrary files via the \texttt{site cpfr} and \texttt{site cpto} commands.\footnote{link to cve here}
+Metasploit has the module \texttt{exploit/unix/ftp/proftpd\_modcopy\_exec} which exploits this flaw.
+By using this module and specifying the \texttt{SITEPATH} option to be \texttt{/var/www/html}, I was able to remotely log in to the machine as the \texttt{www-data} user.
+While logged in, I was able to download files in the \texttt{/var/www/html} directory\footnote{Among those files was the administrator account details of the phpMyAdmin service} and traverse the filesystem after starting an interactive shell.
 
 \newpage
 
