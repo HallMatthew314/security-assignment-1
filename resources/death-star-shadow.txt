@@ -1,0 +1,15 @@
+storm_trooper_1:$1$lnwk829Q$HmlEMwzAUCz0NEitMjx9d1:17607:0:99999:7:::
+storm_trooper_2:$1$9AJdbBeI$7a/Tj3TjRzZYR6mhbZksq0:17607:0:99999:7:::
+storm_trooper_3:$1$WdB.ds.7$N7hkGMUGsyeBgNPwIaF/40:17607:0:99999:7:::
+storm_trooper_4:$1$.jX4bdHx$5F/sLNVjUPMFtLUdS.hog.:17607:0:99999:7:::
+storm_trooper_5:$1$0HHFKzl.$w6VyqglDCJot.Xeb9slLI0:17607:0:99999:7:::
+imperial_guards:$1$v9GI28ar$ebSf18qOk7tgu.iMqf.bi/:17607:0:99999:7:::
+captain_needa:$1$VtXabEV0$FO9c2OF4Qf1onEyYkq.gK/:17607:0:99999:7:::
+admiral_piett:$1$D06DmZeK$cTG0isRNogwyCeQwCZJXF.:17607:0:99999:7:::
+admiral_ozzel:$1$lfbtu2co$eFPtaxBv7sX5IDp8Bc19h.:17607:0:99999:7:::
+general_veers:$1$.wG8JtvN$AJlGTM7XYFaY3Ezr7Av/u/:17607:0:99999:7:::
+emperor_palpatine:$1$Sr5iUN.o$hy9v3MmcpwRq/G3Dhtu2U1:17607:0:99999:7:::
+darth_sidious:$1$TyPfW4pp$Mp7O4bzX8bmWsGGV8ZrVY0:17607:0:99999:7:::
+boba_fett:$1$eOF0T0eZ$GfHV875pepnKEg.JC.zYY/:17607:0:99999:7:::
+death_star_admin:$1$HnIyNzWr$erKQWB6ZTfw2efmZMPDME.:17607:0:99999:7:::
+darth_vader:$1$AnAm41bc$0TkhYTZFnI1srHEzG1TrO/:17607:0:99999:7:::
