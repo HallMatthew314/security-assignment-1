@@ -82,12 +82,21 @@ Port Number & State & Service & Version \\
 \paragraph{}
 The following services on the target machine had exploitable vulnerabilities:
 
+% Port 21/tcp
 \subsection{ProFTPD 1.3.5}
 \paragraph{}
-Version 1.3.5 of ProFTPD allows attackers to read and write to arbitrary files via the \texttt{site cpfr} and \texttt{site cpto} commands.\footnote{link to cve here}
+Version 1.3.5 of ProFTPD has vulnerability \emph{CVE-2015-3306}, which allows attackers to read and write to arbitrary files via the \texttt{site cpfr} and \texttt{site cpto} commands.\footnote{https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3306}
 Metasploit has the module \texttt{exploit/unix/ftp/proftpd\_modcopy\_exec} which exploits this flaw.
 By using this module and specifying the \texttt{SITEPATH} option to be \texttt{/var/www/html}, I was able to remotely log in to the machine as the \texttt{www-data} user.
-While logged in, I was able to download files in the \texttt{/var/www/html} directory\footnote{Among those files was the administrator account details of the phpMyAdmin service} and traverse the filesystem after starting an interactive shell.
+While logged in, I was able to download files in the \texttt{/var/www/html} directory\footnote{Among those files was the administrator account details of the phpMyAdmin service} and traverse the rest of the filesystem after starting an interactive shell.
+
+% Ports 6667/tcp, 6697/tcp and 8067/tcp
+\subsection{UnrealIRCd 3.2.8.1}
+\paragraph{}
+During the period of time from November 2009 to June 2010, version 3.2.8.1 of UnrealIRCd contained \emph{CVE-2010-2075}: a backdoor allowing remote attackers to login to the system and execute arbitrary commands.\footnote{https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2075}
+This vulnerability was only present in copies of the software downloaded from particular mirror sites.
+This backdoor, if present, can be exploited with metasploit module \texttt{exploit/unix/irc/unreal\_irc\_3281\_backdoor}.
+Using this exploit, I was able to remotely log in to the machine as the \texttt{boba\_fett} user\footnote{This user had a text file in their home directory containing the login information for the \texttt{darth\_vader} user.} and use the machine as if I were in an ssh session, all without having to supply a password.
 
 \newpage
 
