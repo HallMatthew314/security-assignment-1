@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{changepage}
+\usepackage{graphicx}
 
 \title{IN618 - Assignment 1}
 \author{Matthew Hall}
@@ -15,6 +16,8 @@
 \newpage
 
 \section{Host Discovery}
+
+\subsection{Discovering hosts with nmap}
 \paragraph{}
 I used the following commands during the host discorvery process:
 
@@ -33,6 +36,14 @@ The above command attempts to identify the operating system of the host with add
 \texttt{nmap -O 192.168.100.253}
 
 The above command attempts to identify the operating system of the host with address 192.168.100.253
+
+\subsection{Network Diagram}
+
+\begin{figure}[h!]
+	\includegraphics[width=\linewidth]{resources/network-diagram.png}
+	\caption{Network diagram of address space \texttt{192.168.100.0/24}}
+	\label{fig:network-diagram}
+\end{figure}
 
 \newpage
 
