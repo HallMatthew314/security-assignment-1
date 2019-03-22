@@ -1,0 +1,30 @@
+storm_trooper_1 & p & HmlEMwzAUCz0NEitMjx9d1 & lnwk829Q \\
+\hline
+storm_trooper_2 & p & 7a/Tj3TjRzZYR6mhbZksq0 & 9AJdbBeI \\
+\hline
+storm_trooper_3 & p & N7hkGMUGsyeBgNPwIaF/40 & WdB.ds.7 \\
+\hline
+storm_trooper_4 & p & 5F/sLNVjUPMFtLUdS.hog. & .jX4bdHx \\
+\hline
+storm_trooper_5 & p & w6VyqglDCJot.Xeb9slLI0 & 0HHFKzl. \\
+\hline
+imperial_guards & p & ebSf18qOk7tgu.iMqf.bi/ & v9GI28ar \\
+\hline
+captain_needa & p & FO9c2OF4Qf1onEyYkq.gK/ & VtXabEV0 \\
+\hline
+admiral_piett & p & cTG0isRNogwyCeQwCZJXF. & D06DmZeK \\
+\hline
+admiral_ozzel & p & eFPtaxBv7sX5IDp8Bc19h. & lfbtu2co \\
+\hline
+general_veers & p & AJlGTM7XYFaY3Ezr7Av/u/ & .wG8JtvN \\
+\hline
+emperor_palpatine & p & hy9v3MmcpwRq/G3Dhtu2U1 & Sr5iUN.o \\
+\hline
+darth_sidious & p & Mp7O4bzX8bmWsGGV8ZrVY0 & TyPfW4pp \\
+\hline
+boba_fett & p & GfHV875pepnKEg.JC.zYY/ & eOF0T0eZ \\
+\hline
+death_star_admin & p & erKQWB6ZTfw2efmZMPDME. & HnIyNzWr \\
+\hline
+darth_vader & p & 0TkhYTZFnI1srHEzG1TrO/ & AnAm41bc \\
+\hline
