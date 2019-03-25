@@ -116,7 +116,7 @@ Using this exploit, I was able to remotely log in to the machine as the \texttt{
 The server was hosting the Jetty web server (verison 8.1.7v20120910) on port 8080, which was running Apache Continuum 1.4.2.
 This version of Continuum has vulnerability \emph{EDB-39886}, which allows attackers to perform arbitrary code injection\footnote{https://www.exploit-db.com/exploits/39886}.
 I was able to exploit this using the metasploit module \texttt{exploit/linux/http/apache\_continuum\_cmd\_exec}.
-Using this exploit, I was able to gain root access to the machine and was able to read and download root-only files, including the \texttt{/etc/shadow} file, which contains the hashed passwords of the users on the system. 
+Using this exploit, I was granted root access to the machine and was able to read and download root-only files, including the \texttt{/etc/shadow} file as well as the server's private ssh keys.
 I was able to do all of this without supplying a password.
 
 \newpage
