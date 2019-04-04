@@ -16,7 +16,7 @@
 \tableofcontents
 \newpage
 
-\section{Host Discovery}
+\section{Network Information}
 
 \subsection{Discovering hosts with nmap}
 \paragraph{}
@@ -46,9 +46,13 @@ The above command attempts to identify the operating system of the host with add
 	\label{fig:network-diagram}
 \end{figure}
 
+\subsection{Target Machine Information}
+\paragraph{}
+Lorem ipsum.
+
 \newpage
 
-\section{Information Gathering}
+\section{Open Port and Running Services}
 \paragraph{}
 By use of the nmap command \texttt{nmap -sV 192.168.100.253}, I was able to retrieve the following information about what services on the target machine are running on what ports:
 \newline
@@ -95,7 +99,7 @@ Port Number & State & Service & Version \\
 The following services on the target machine had exploitable vulnerabilities:
 
 % Port 21/tcp
-\subsection{ProFTPD 1.3.5}
+\subsection{ProFTPD 1.3.5 (port 21/tcp)}
 \paragraph{}
 Version 1.3.5 of ProFTPD has vulnerability \emph{CVE-2015-3306}, which allows attackers to read and write to arbitrary files via the \texttt{site cpfr} and \texttt{site cpto} commands.\footnote{https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3306}
 Metasploit has the module \texttt{exploit/unix/ftp/proftpd\_modcopy\_exec} which exploits this flaw.
@@ -103,7 +107,7 @@ By using this module and specifying the \texttt{SITEPATH} option to be \texttt{/
 While logged in, I was able to download files in the \texttt{/var/www/html} directory\footnote{Among those files was the administrator account details of the phpMyAdmin service} and traverse the rest of the filesystem after starting an interactive shell.
 
 % Ports 6667/tcp, 6697/tcp and 8067/tcp
-\subsection{UnrealIRCd 3.2.8.1}
+\subsection{UnrealIRCd 3.2.8.1 (port 6667/tcp)}
 \paragraph{}
 During the period of time from November 2009 to June 2010, version 3.2.8.1 of UnrealIRCd contained \emph{CVE-2010-2075}: a backdoor allowing remote attackers to login to the system and execute arbitrary commands.\footnote{https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2075}
 This vulnerability was only present in copies of the software downloaded from particular mirror sites.
@@ -111,7 +115,7 @@ This backdoor, if present, can be exploited with metasploit module \texttt{explo
 Using this exploit, I was able to remotely log in to the machine as the \texttt{boba\_fett} user\footnote{This user had a text file in their home directory containing the login information for the \texttt{darth\_vader} user.} and use the machine as if I were in an ssh session, all without having to supply a password.
 
 % Port 8080/tcp
-\subsection{Apache Continuum 1.4.2}
+\subsection{Apache Continuum 1.4.2 (port 8080/tcp)}
 \paragraph{}
 The server was hosting the Jetty web server (verison 8.1.7v20120910) on port 8080, which was running Apache Continuum 1.4.2.
 This version of Continuum has vulnerability \emph{EDB-39886}, which allows attackers to perform arbitrary code injection\footnote{https://www.exploit-db.com/exploits/39886}.
@@ -241,6 +245,47 @@ I was also able to recover the following photograph. It appears to be from the m
 \newpage
 
 \section{Security Recommendations}
+\paragraph{}
+Lorem ipsum.
+
+% Ubuntu 14.04 LTS nearing end-of-life, upgrade to 18.04 LTS
+\subsection{Upgrade Operating System}
+\paragraph{}
+Lorem ipsum.
+
+% Unpatched software contains vulnerabilities
+\subsection{Upgrade Software}
+\paragraph{}
+Lorem ipsum.
+
+% No firewall / packet filtering - do that
+\subsection{Firewall}
+\paragraph{}
+Lorem ipsum.
+
+% darth_vader wrote script to sql-inject payroll app
+\subsection{Insider Threats}
+\paragraph{}
+Lorem ipsum.
+
+% /etc/shadow, MySQL, writing passwords down in plaintext
+\subsection{Insecure Password Storage}
+\paragraph{}
+Lorem ipsum.
+
+% Passwords were cracked easily, also re-used
+\subsection{Weak passwords}
+\paragraph{}
+Lorem ipsum.
+
+% Payroll app is insecure
+\subsection{Poorly designed payroll app}
+\paragraph{}
+Lorem ipsum.
+
+\newpage
+
+\section{Conclusions}
 \paragraph{}
 Lorem ipsum.
 
