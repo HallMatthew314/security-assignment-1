@@ -315,7 +315,7 @@ The third method I used\footnote{And expected to use} was password cracking. By 
 Using a relatively powerful GPU\footnote{A GTX 1050ti} I successfully recovered the remaining passwords with roughly 20 minutes of computing time.
 This is due to two problems with the password on the server.
 The first problem is that the user's passwords were relatively common passwords, whether the users were aware of this or not.
-Due to this, the following actions must be taken
+Due to this, the following actions must be taken:
 \begin{enumerate}
 	\item \emph{ALL EMPLOYEES MUST CHANGE ALL OF THEIR PASSWORDS IMMEDIATELY}
 	\item All employees should be educated of the dangers of using easy-to-guess passwords
@@ -330,13 +330,43 @@ A reasonable technique for making a password is as follows:
 The second problem is that the passwords were hashed+salted using md5crypt.
 This hashing algorithm is too fast to be used for storing passwords and should not have been used on the server.
 This is a problem because if a hashing algorithm is too fast, it becomes easy for attackers to guess what a hashed password might be.
-I would recommend using the SHA-512 algorithm instead of md5crypt, since it is slower (and therefore harder to guess a hashed password) and practically impossible\footnote{At the time of writing} to generate a collision with this algorithm.
+I would recommend using the SHA-512 algorithm instead of md5crypt, since SHA-512 is slower (and therefore harder to guess a hashed password) and practically impossible\footnote{At the time of writing} to generate a collision with this algorithm.
 
 % Payroll app is insecure
-\subsection{Poorly designed payroll app}
+\subsection{Poorly Designed Payroll App}
 \label{subsec:payroll_app}
 \paragraph{}
-Lorem ipsum.
+The payroll app on the server is incredibly insecure and needs to be replaced as soon as possible.
+Firstly, the source code contains the password for the \texttt{root} account on the MySQL server.
+This means that anyone on the server can view the source code, read the password and log in as the root user.
+This can be remedied by changing the file permissions so that only the root user can view the contents of the file.
+
+\paragraph{}
+Secondly, the app is vulnerable to SQL injection to the extent that I was able to print arbitrary information from the database to the screen via the username input box.
+The input that I used to extract the following data was:
+\begin{verbatim}
+' UNION(SELECT username,password,3,4 FROM payroll.users);--
+\end{verbatim}
+%\begin{figure}[H]
+%	\includegraphics[width=\linewidth]{resources/sql_injection.png}
+%	\caption{Results from SQL injection}
+%	\label{fig:sql_injection}
+%\end{figure}
+This can be fixed by changing the app's code to use prepared statements, which are currently considered the safe way to interact with a database via a web form.
+
+\paragraph{}
+Finally, as you may have deduced from the screenshot above (figure~\ref{fig:sql_injection}), the app stores the user's passwords in plaintext.
+This is incredibly bad practice for a number of reasons.
+For one, users tend to reuse the same password for multiple services\footnote{Even though they shouldn't} (see section~\ref{sebsec:bad_passwords}), which means an attacker can find passwords on insecure websites and login on other websites using the same username and password combination.
+Also, a rogue insider (which you may have, section~\ref{subsec:inside_threats}) with access to the database can gain access much more easily than an outside attacker, meaning they can steal the passwords of everyone using the app.
+Additionally, should you offer the ability for a user to click a 'I forgot my password' button and send them their password via email, the email could be intercepted and the password stolen that way.
+Ultimately, the following actions need to be taken regarding the payroll app:
+\begin{enumerate}
+	\item \emph{ALL EMPLOYEES MUST CHANGE ALL OF THEIR PASSWORDS IMMEDIATELY}
+	\item The payroll app must be re-programmed to use prepared statements
+	\item The app should use a separate authentication service, such as OAuth to handle logging in
+	\item If the above is not possible, future passwords must be stored by salting and hashing with a modern, trusted cryptographic hashing algorithm (see section~\ref{subsec:bad_passwords})
+\end{enumerate}
 
 % Sensitive information was not encrypted
 \subsection{Sensitive Information}
