@@ -21,8 +21,10 @@ Lorem ipsum.
 \newpage
 
 \section{Network Information}
+\label{sec:network_information}
 
 \subsection{Discovering hosts with nmap}
+\label{subsec:discovering_hosts}
 \paragraph{}
 I used the following commands during the host discovery process:
 
@@ -43,20 +45,22 @@ The above command attempts to identify the operating system of the host with add
 The above command attempts to identify the operating system of the host with address 192.168.100.253
 
 \subsection{Network Diagram}
-
+\label{subsec:network_diagram}
 \begin{figure}[h!]
 	\includegraphics[width=\linewidth]{resources/network-diagram.png}
 	\caption{Network diagram of address space \texttt{192.168.100.0/24}}
-	\label{fig:network-diagram}
+	\label{fig:network_diagram}
 \end{figure}
 
 \subsection{Target Machine Information}
+\label{subsec:target_info}
 \paragraph{}
 Lorem ipsum.
 
 \newpage
 
 \section{Open Port and Running Services}
+\label{sec:services}
 \paragraph{}
 By use of the nmap command \texttt{nmap -sV 192.168.100.253}, I was able to retrieve the following information about what services on the target machine are running on what ports:
 \newline
@@ -99,11 +103,13 @@ Port Number & State & Service & Version \\
 \newpage
 
 \section{Vulnerability Identification}
+\label{sec:vulnerability_identification}
 \paragraph{}
 The following services on the target machine had exploitable vulnerabilities:
 
 % Port 21/tcp
 \subsection{ProFTPD 1.3.5 (port 21/tcp)}
+\label{subsec:pro_ftpd}
 \paragraph{}
 Version 1.3.5 of ProFTPD has vulnerability \emph{CVE-2015-3306}, which allows attackers to read and write to arbitrary files via the \texttt{site cpfr} and \texttt{site cpto} commands.\footnote{https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3306}
 Metasploit has the module \texttt{exploit/unix/ftp/proftpd\_modcopy\_exec} which exploits this flaw.
@@ -112,6 +118,7 @@ While logged in, I was able to download files in the \texttt{/var/www/html} dire
 
 % Ports 6667/tcp, 6697/tcp and 8067/tcp
 \subsection{UnrealIRCd 3.2.8.1 (port 6667/tcp)}
+\label{subsec:unreal_ircd}
 \paragraph{}
 During the period of time from November 2009 to June 2010, version 3.2.8.1 of UnrealIRCd contained \emph{CVE-2010-2075}: a backdoor allowing remote attackers to login to the system and execute arbitrary commands.\footnote{https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2075}
 This vulnerability was only present in copies of the software downloaded from particular mirror sites.
@@ -120,6 +127,7 @@ Using this exploit, I was able to remotely log in to the machine as the \texttt{
 
 % Port 8080/tcp
 \subsection{Apache Continuum 1.4.2 (port 8080/tcp)}
+\label{subsec:apache_continuum}
 \paragraph{}
 The server was hosting the Jetty web server (verison 8.1.7v20120910) on port 8080, which was running Apache Continuum 1.4.2.
 This version of Continuum has vulnerability \emph{EDB-39886}, which allows attackers to perform arbitrary code injection\footnote{https://www.exploit-db.com/exploits/39886}.
@@ -130,11 +138,12 @@ I was able to do all of this without supplying a password.
 \newpage
 
 \section{Information Extraction}
+\label{sec:info_extraction}
 \paragraph{}
 As requested, I have located and extracted both the login details of every user account on the system and all information regarding the plans of the Galactic Empire.
 
 \subsection{Login Details}
-
+\label{subsec:login_details}
 \begin{adjustwidth}{-1.5cm}{}
 \begin{tabular}{ |c|c|c|c| }
 \hline
@@ -174,43 +183,44 @@ darth\_vader & \emph{daddy\_issues-7733} & \texttt{0TkhYTZFnI1srHEzG1TrO/} & \te
 \end{adjustwidth}
 
 \paragraph{}
-The plaintext passwords that are written in italics were found in plaintext form (see section 5.5).
+The plaintext passwords that are written in italics were found in plaintext form (see section~\ref{subsec:bad_passwords}).
 The others were found in their salted md5crypt form and were recovered with hashcat using the rockyou dictionary and the \texttt{default\_pass\_for\_services\_unhash} dictionary included in Metasploit.
 
 \newpage
 
 \subsection{Plans of the Empire}
+\label{subsec:empire_plans}
 \paragraph{}
 Below is a collection of what appear to be planning documents for the Death Star. These documents also relate to its crew and personnel. I was able to locate these files in the server directory \texttt{/home/death\_star\_admin/death-star\_plans}.
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{resources/plans/deathstar-crafts.png}
 	\caption{\texttt{deathstar-crafts.png}}
-	\label{fig:deathstar-crafts}
+	\label{fig:deathstar_crafts}
 \end{figure}
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{resources/plans/deathstar-cross-section.png}
 	\caption{\texttt{deathstar-cross-section.png}}
-	\label{fig:deathstar-cross-section}
+	\label{fig:deathstar-cross_section}
 \end{figure}
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{resources/plans/deathstar-operations.png}
 	\caption{\texttt{deathstar-operations.png}}
-	\label{fig:deathstar-operations}
+	\label{fig:deathstar_operations}
 \end{figure}
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{resources/plans/deathstar-summary.png}
 	\caption{\texttt{deathstar-summary.png}}
-	\label{fig:deathstar-summary}
+	\label{fig:deathstar_summary}
 \end{figure}
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{resources/plans/deathstar-technical-specs-diagram.png}
 	\caption{\texttt{deathstar-techincal-specs-diagram.png}}
-	\label{fig:deathstar-technical-specs-diagram}
+	\label{fig:deathstar_technical_specs_diagram}
 \end{figure}
 
 \paragraph{}
@@ -219,13 +229,13 @@ The two images below, containing information about Rebel spacecraft, were found 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{resources/plans/rebel-alliance-fleet-1.jpg}
 	\caption{\texttt{rebel-alliance-fleet-1.jpg}}
-	\label{fig:rebel-alliance-fleet-1}
+	\label{fig:rebel_alliance_fleet_1}
 \end{figure}
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{resources/plans/rebel-alliance-fleet-2.jpg}
 	\caption{\texttt{rebel-alliance-fleet-2.jpg}}
-	\label{fig:rebel-alliance-fleet-2}
+	\label{fig:rebel_alliance_fleet_2}
 \end{figure}
 
 \paragraph{}
@@ -234,7 +244,7 @@ It is my firm belief that the image below will be of great value to the Rebel Al
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{resources/plans/death-star-weakness.png}
 	\caption{\texttt{death-star-weakness.png}}
-	\label{fig:death-star-weakness}
+	\label{fig:death_star_weakness}
 \end{figure}
 
 \paragraph{}
@@ -243,17 +253,19 @@ I was also able to recover the following photograph. It appears to be from the m
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{resources/plans/i-love-my-death-star.jpg}
 	\caption{\texttt{i-love-my-death-star.jpg}}
-	\label{fig:i-love-my-death-star}
+	\label{fig:i_love_my_death_star}
 \end{figure}
 
 \newpage
 
 \section{Security Recommendations}
+\label{sec:security_recommendations}
 \paragraph{}
 Lorem ipsum.
 
 % Ubuntu 14.04 LTS nearing end-of-life, upgrade to 18.04 LTS
 \subsection{Upgrade Operating System}
+\label{subsec:upgrade_os}
 \paragraph{}
 The operating system on the Death Star server was Ubuntu 14.04 LTS, which is due to stop receiving security updates in April 2019.
 Because of this, it is imperative that the operating system is upgraded to a new version.
@@ -262,12 +274,14 @@ Additionally, installations of Ubuntu can be upgraded to later releases via the 
 
 % Unpatched software contains vulnerabilities
 \subsection{Upgrade Software}
+\label{subsec:upgrade_software}
 \paragraph{}
 Out-of-date software is much more likely to contain vulnerabilities than up-to-date versions.
 Many of the services provided by the Death Star server were running outdated software that should be patched \emph{immediately}.
 
 % No firewall / packet filtering - do that
 \subsection{Firewall}
+\label{subsec:firewall}
 \paragraph{}
 The Death Star server did not have any kind of firewall, allowing an attacker to easily scan every port on the system and send malicious data packets to the server.
 I would recommend the installation of a physical firewall, ideally running an OS designed for the purpose of being a firewall/router such as pfSense.
@@ -275,15 +289,17 @@ If the budget does not allow this, some kind of packet-filtering process should 
 I personally can vouch for the use of iptables, a software firewall that is available on virtually every Linux distribution. 
 
 % darth_vader wrote script to sql-inject payroll app
-\subsection{Insider Threats}
+\subsection{Inside Threats}
+\label{subsec:inside_threats}
 \paragraph{}
 During my investigation, I found a questionable Ruby script in the \texttt{/home/darth\_vader} folder, implying that they were created by this user.
-Upon analysing the contents of the file, it appears to perform an SQL injection attack on the Death Star's payroll app (see section 5.6).
+Upon analysing the contents of the file, it appears to perform an SQL injection attack on the Death Star's payroll app (see section~\ref{subsec:payroll_app}).
 All of this implies that there is a rogue employee of the Empire using the Death Star server.
 \emph{This cannot be ignored and must be investigated as soon as possible.} 
 
 % /etc/shadow, MySQL, writing passwords down in plaintext
 \subsection{Insecure Password Storage and Bad User Passwords}
+\label{subsec:bad_passwords}
 \paragraph{}
 During my attempts to recover passwords, I was able to recover passwords in three different ways.
 \paragraph{}
@@ -291,11 +307,11 @@ The first method I was able to use was simply reading a user's password that was
 I was able to log in to the account with the password I found and created another account for myself in the process. I was able to do this because the \texttt{darth\_vader} user had superuser access. All employees must be be made aware of the dangers of storing passwords in plaintext.
 \paragraph{}
 The second method I was able to use to recover passwords was by exploiting the payroll app.
-The payroll app on the Death Star server has numerous security issues (see section 5.6) and one of those issues was the fact that the user passwords were stored in plaintext.
+The payroll app on the Death Star server has numerous security issues (see section ~\ref{subsec:payroll_app}) and one of those issues was the fact that the user passwords were stored in plaintext.
 I went through each password I found in the app and attempted to log in to the corresponding user account.
 I was able to log in as the \texttt{captain\_needa} and \texttt{boba\_fett} users. Incidentally, the \texttt{boba\_fett} user was the user that had the password for \texttt{darth\_vader} in their home directory. All employees must be made aware of the dangers of reusing passwords and the owner of the \texttt{boba\_fett} user should be sentenced to death by sarlacc.
 \paragraph{}
-The third method I used\footnote{And expected to use} was password cracking. By using the \texttt{hashcat} tool I was able to crack the remaining user's passwords with two dictionary attacks (see section 4.1).
+The third method I used\footnote{And expected to use} was password cracking. By using the \texttt{hashcat} tool I was able to crack the remaining user's passwords with two dictionary attacks (see section~\ref{subsec:login_details}).
 Using a relatively powerful GPU\footnote{A GTX 1050ti} I successfully recovered the remaining passwords with roughly 20 minutes of computing time.
 This is due to two problems with the password on the server.
 The first problem is that the user's passwords were relatively common passwords, whether the users were aware of this or not.
@@ -318,17 +334,20 @@ I would recommend using the SHA-512 algorithm instead of md5crypt, since it is s
 
 % Payroll app is insecure
 \subsection{Poorly designed payroll app}
+\label{subsec:payroll_app}
 \paragraph{}
 Lorem ipsum.
 
 % Sensitive information was not encrypted
 \subsection{Sensitive Information}
+\label{subsec:sensitive_info}
 \paragraph{}
 Lorem ipsum.
 
 \newpage
 
 \section{Conclusions}
+\label{sec:conclusions}
 \paragraph{}
 Lorem ipsum.
 
