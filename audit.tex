@@ -174,7 +174,7 @@ darth\_vader & \emph{daddy\_issues-7733} & \texttt{0TkhYTZFnI1srHEzG1TrO/} & \te
 \end{adjustwidth}
 
 \paragraph{}
-The plaintext passwords that are written in italics were found in plaintext form.
+The plaintext passwords that are written in italics were found in plaintext form (see section 5.5).
 The others were found in their salted md5crypt form and were recovered with hashcat using the rockyou dictionary and the \texttt{default\_pass\_for\_services\_unhash} dictionary included in Metasploit.
 
 \newpage
@@ -278,19 +278,43 @@ I personally can vouch for the use of iptables, a software firewall that is avai
 \subsection{Insider Threats}
 \paragraph{}
 During my investigation, I found a questionable Ruby script in the \texttt{/home/darth\_vader} folder, implying that they were created by this user.
-Upon analysing the contents of the file, it appears to perform an SQL injection attack on the Death Star's payroll app (see section 5.7).
+Upon analysing the contents of the file, it appears to perform an SQL injection attack on the Death Star's payroll app (see section 5.6).
 All of this implies that there is a rogue employee of the Empire using the Death Star server.
 \emph{This cannot be ignored and must be investigated as soon as possible.} 
 
 % /etc/shadow, MySQL, writing passwords down in plaintext
-\subsection{Insecure Password Storage}
+\subsection{Insecure Password Storage and Bad User Passwords}
 \paragraph{}
 During my attempts to recover passwords, I was able to recover passwords in three different ways.
-
-% Passwords were cracked easily, also re-used
-\subsection{Weak passwords}
 \paragraph{}
-Lorem ipsum.
+The first method I was able to use was simply reading a user's password that was written down in a file. Incidentally, this was the password of the \texttt{darth\_vader} user.
+I was able to log in to the account with the password I found and created another account for myself in the process. I was able to do this because the \texttt{darth\_vader} user had superuser access. All employees must be be made aware of the dangers of storing passwords in plaintext.
+\paragraph{}
+The second method I was able to use to recover passwords was by exploiting the payroll app.
+The payroll app on the Death Star server has numerous security issues (see section 5.6) and one of those issues was the fact that the user passwords were stored in plaintext.
+I went through each password I found in the app and attempted to log in to the corresponding user account.
+I was able to log in as the \texttt{captain\_needa} and \texttt{boba\_fett} users. Incidentally, the \texttt{boba\_fett} user was the user that had the password for \texttt{darth\_vader} in their home directory. All employees must be made aware of the dangers of reusing passwords and the owner of the \texttt{boba\_fett} user should be sentenced to death by sarlacc.
+\paragraph{}
+The third method I used\footnote{And expected to use} was password cracking. By using the \texttt{hashcat} tool I was able to crack the remaining user's passwords with two dictionary attacks (see section 4.1).
+Using a relatively powerful GPU\footnote{A GTX 1050ti} I successfully recovered the remaining passwords with roughly 20 minutes of computing time.
+This is due to two problems with the password on the server.
+The first problem is that the user's passwords were relatively common passwords, whether the users were aware of this or not.
+Due to this, the following actions must be taken
+\begin{enumerate}
+	\item \emph{ALL EMPLOYEES MUST CHANGE ALL OF THEIR PASSWORDS IMMEDIATELY}
+	\item All employees should be educated of the dangers of using easy-to-guess passwords
+	\item All employees should be instructed how to think of good passwords
+\end{enumerate}
+A reasonable technique for making a password is as follows:
+\begin{enumerate}
+	\item Choose three random, 8-10 letter words
+	\item Choose another reasonably long, more obscure word (or even a made-up word)
+	\item Pick a symbol and put it between two of the words
+\end{enumerate}
+The second problem is that the passwords were hashed+salted using md5crypt.
+This hashing algorithm is too fast to be used for storing passwords and should not have been used on the server.
+This is a problem because if a hashing algorithm is too fast, it becomes easy for attackers to guess what a hashed password might be.
+I would recommend using the SHA-512 algorithm instead of md5crypt, since it is slower (and therefore harder to guess a hashed password) and practically impossible\footnote{At the time of writing} to generate a collision with this algorithm.
 
 % Payroll app is insecure
 \subsection{Poorly designed payroll app}
