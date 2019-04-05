@@ -262,7 +262,9 @@ I was also able to recover the following photograph. It appears to be from the m
 \section{Security Recommendations}
 \label{sec:security_recommendations}
 \paragraph{}
-Lorem ipsum.
+Over the course of this audit, I have discovered multiple vulnerabilities in key services running on the Death Star server and exploited them.
+I have also found many other security issues during my investigation of the server.
+Here I have compiled the details of all of the security flaws I could find with this server, as well as various recommendations to fix these problems for the future.
 
 % Ubuntu 14.04 LTS nearing end-of-life, upgrade to 18.04 LTS
 \subsection{Upgrade Operating System}
@@ -270,25 +272,46 @@ Lorem ipsum.
 \paragraph{}
 The operating system on the Death Star server was Ubuntu 14.04 LTS, which is due to stop receiving security updates in April 2019.
 Because of this, it is imperative that the operating system is upgraded to a new version.
-I would recommend installing Ubuntu 18.04 LTS,  which will receive security updates until 2023.
-Additionally, installations of Ubuntu can be upgraded to later releases via the command line by use of the \texttt{do-release-upgrade} command.
+
+\paragraph{}
+\begin{adjustwidth}{1.5cm}{1.5cm}
+	Security recommendations regarding unsupported operating systems:
+	\begin{enumerate}
+		\item Upgrade to Ubuntu 18.04 LTS, which will receive security updates until 2023. Additionally, installations of Ubuntu can be upgraded to later releases easily via the command line by use of the \texttt{do-release-upgrade} command.
+	\end{enumerate}
+\end{adjustwidth}
 
 % Unpatched software contains vulnerabilities
 \subsection{Upgrade Software}
 \label{subsec:upgrade_software}
 \paragraph{}
+Many of the services provided by the Death Star server were running outdated software that contained vulnerabilities.
 Out-of-date software is much more likely to contain vulnerabilities than up-to-date versions.
-Many of the services provided by the Death Star server were running outdated software that should be patched \emph{immediately}.
+
+\paragraph{}
+\begin{adjustwidth}{1.5cm}{1.5cm}
+	Security recommendations regarding out-of-date software:
+	\begin{enumerate}
+		\item Update your software. \emph{Now.}
+	\end{enumerate}
+\end{adjustwidth}
 
 % No firewall / packet filtering - do that
 \subsection{Firewall}
 \label{subsec:firewall}
 \paragraph{}
-The Death Star server did not have any kind of firewall, allowing an attacker to easily scan every port on the system and send malicious data packets to the server.
-I would recommend the installation of a physical firewall, ideally running an OS designed for the purpose of being a firewall/router such as pfSense.
-If the budget does not allow this, some kind of packet-filtering process should be implemented on the server.
-I personally can vouch for the use of iptables, a software firewall that is available on virtually every Linux distribution. 
+The Death Star server did not have any kind of firewall.
+Because of this, an attacker could easily scan every port on the system and send malicious data packets to the server.
 
+\paragraph{}
+\begin{adjustwidth}{1.5cm}{1.5cm}
+	Security recommendations regarding firewalls:
+	\begin{enumerate}
+		\item I would recommend the installation of a physical firewall, ideally running an OS designed for the purpose of being a firewall/router such as pfSense.
+		\item If the budget does not allow this, some kind of packet-filtering process should be implemented on the server.
+	\end{enumerate}
+	I personally can vouch for the use of iptables, a software firewall that is available on virtually every Linux distribution.
+\end{adjustwidth}
 % darth_vader wrote script to sql-inject payroll app
 \subsection{Inside Threats}
 \label{subsec:inside_threats}
@@ -296,42 +319,65 @@ I personally can vouch for the use of iptables, a software firewall that is avai
 During my investigation, I found a questionable Ruby script in the \texttt{/home/darth\_vader} folder, implying that they were created by this user.
 Upon analysing the contents of the file, it appears to perform an SQL injection attack on the Death Star's payroll app (see section~\ref{subsec:payroll_app}).
 All of this implies that there is a rogue employee of the Empire using the Death Star server.
-\emph{This cannot be ignored and must be investigated as soon as possible.} 
+
+\paragraph{}
+\begin{adjustwidth}{1.5cm}{1.5cm}
+	Security recommendations regarding the possibility of a rogue employee:
+	\begin{enumerate}
+		\item \emph{This cannot be ignored and must be investigated as soon as possible.} 
+	\end{enumerate}
+\end{adjustwidth}
 
 % /etc/shadow, MySQL, writing passwords down in plaintext
 \subsection{Insecure Password Storage and Bad User Passwords}
 \label{subsec:bad_passwords}
 \paragraph{}
 During my attempts to recover passwords, I was able to recover passwords in three different ways.
+
 \paragraph{}
 The first method I was able to use was simply reading a user's password that was written down in a file. Incidentally, this was the password of the \texttt{darth\_vader} user.
-I was able to log in to the account with the password I found and created another account for myself in the process. I was able to do this because the \texttt{darth\_vader} user had superuser access. All employees must be be made aware of the dangers of storing passwords in plaintext.
+I was able to log in to the account with the password I found and created another account for myself in the process. I was able to do this because the \texttt{darth\_vader} user had superuser access.
+
 \paragraph{}
 The second method I was able to use to recover passwords was by exploiting the payroll app.
 The payroll app on the Death Star server has numerous security issues (see section ~\ref{subsec:payroll_app}) and one of those issues was the fact that the user passwords were stored in plaintext.
 I went through each password I found in the app and attempted to log in to the corresponding user account.
-I was able to log in as the \texttt{captain\_needa} and \texttt{boba\_fett} users. Incidentally, the \texttt{boba\_fett} user was the user that had the password for \texttt{darth\_vader} in their home directory. All employees must be made aware of the dangers of reusing passwords and the owner of the \texttt{boba\_fett} user should be sentenced to death by sarlacc.
+I was able to log in as the \texttt{captain\_needa} and \texttt{boba\_fett} users. Incidentally, the \texttt{boba\_fett} user was the user that had the password for \texttt{darth\_vader} in their home directory.
+
 \paragraph{}
 The third method I used\footnote{And expected to use} was password cracking. By using the \texttt{hashcat} tool I was able to crack the remaining user's passwords with two dictionary attacks (see section~\ref{subsec:login_details}).
 Using a relatively powerful GPU\footnote{A GTX 1050ti} I successfully recovered the remaining passwords with roughly 20 minutes of computing time.
 This is due to two problems with the password on the server.
 The first problem is that the user's passwords were relatively common passwords, whether the users were aware of this or not.
-Due to this, the following actions must be taken:
-\begin{enumerate}
-	\item \emph{ALL EMPLOYEES MUST CHANGE ALL OF THEIR PASSWORDS IMMEDIATELY}
-	\item All employees should be educated of the dangers of using easy-to-guess passwords
-	\item All employees should be instructed how to think of good passwords
-\end{enumerate}
+The second problem is that the passwords were hashed+salted using md5crypt.
+This hashing algorithm is too fast to be used for storing passwords and should not have been used on the server.
+This is a problem because if a hashing algorithm is too fast, it becomes easy for attackers to guess what a hashed password might be.
+
+\paragraph{}
+\begin{adjustwidth}{1.5cm}{1.5cm}
+	Security recommendations regarding passwords and password storage:
+	\begin{enumerate}
+		\item \emph{ALL EMPLOYEES MUST CHANGE ALL OF THEIR PASSWORDS IMMEDIATELY}
+		\item All employees must be educated about
+		\begin{enumerate}
+			\item The dangers of using easy-to-guess passwords
+			\item The dangers of storing/writing down passwords in plaintext
+			\item The dangers of reusing passwords
+			\item How to think of good passwords (see below for example method)
+		\end{enumerate}
+		\item Future passwords should be stored by salting and hashing using a secure, trusted cryptographic hashing algorithm (see below)
+		\item The owner of the \texttt{boba\_fett} user should be sentenced to death by sarlacc
+	\end{enumerate}
+\end{adjustwidth}
+
+\paragraph{}
 A reasonable technique for making a password is as follows:
 \begin{enumerate}
 	\item Choose three random, 8-10 letter words
 	\item Choose another reasonably long, more obscure word (or even a made-up word)
 	\item Pick a symbol and put it between two of the words
 \end{enumerate}
-The second problem is that the passwords were hashed+salted using md5crypt.
-This hashing algorithm is too fast to be used for storing passwords and should not have been used on the server.
-This is a problem because if a hashing algorithm is too fast, it becomes easy for attackers to guess what a hashed password might be.
-I would recommend using the SHA-512 algorithm instead of md5crypt, since SHA-512 is slower (and therefore harder to guess a hashed password) and practically impossible\footnote{At the time of writing} to generate a collision with this algorithm.
+As for hashing, I would recommend using the SHA-512 algorithm instead of md5crypt, since SHA-512 is slower (and therefore harder to guess a hashed password) and practically impossible\footnote{At the time of writing} to generate a collision with this algorithm.
 
 % Payroll app is insecure
 \subsection{Poorly Designed Payroll App}
@@ -361,13 +407,17 @@ This is incredibly bad practice for a number of reasons.
 For one, users tend to reuse the same password for multiple services\footnote{Even though they shouldn't} (see section~\ref{subsec:bad_passwords}), which means an attacker can find passwords on insecure websites and login on other websites using the same username and password combination.
 Also, a rogue insider (which you may have, section~\ref{subsec:inside_threats}) with access to the database can gain access much more easily than an outside attacker, meaning they can steal the passwords of everyone using the app.
 Additionally, should you offer the ability for a user to click a 'I forgot my password' button and send them their password via email, the email could be intercepted and the password stolen that way.
-Ultimately, the following actions need to be taken regarding the payroll app:
-\begin{enumerate}
-	\item \emph{ALL EMPLOYEES MUST CHANGE ALL OF THEIR PASSWORDS IMMEDIATELY}
-	\item The payroll app must be re-programmed to use prepared statements
-	\item The app should use a separate authentication service, such as OAuth to handle logging in
-	\item If the above is not possible, future passwords must be stored by salting and hashing with a modern, trusted cryptographic hashing algorithm (see section~\ref{subsec:bad_passwords})
-\end{enumerate}
+
+\paragraph{}
+\begin{adjustwidth}{1.5cm}{1.5cm}
+	Security recommendations regarding the payroll app:
+	\begin{enumerate}
+		\item \emph{ALL EMPLOYEES MUST CHANGE ALL OF THEIR PASSWORDS IMMEDIATELY}
+		\item The payroll app must be re-programmed to use prepared statements
+		\item The app should use a separate authentication service, such as OAuth to handle logging in
+		\item If the above is not possible, future passwords must be stored by salting and hashing with a modern, trusted cryptographic hashing algorithm (see recommendations in section~\ref{subsec:bad_passwords})
+	\end{enumerate}
+\end{adjustwidth}
 
 % Sensitive information was not encrypted
 \subsection{Sensitive Information}
@@ -376,8 +426,14 @@ Ultimately, the following actions need to be taken regarding the payroll app:
 I found it relatively easy to locate the pieces of intelligence I was tasked with finding.
 Unfortunately for the Empire, I also found the intelligence easy to read.
 What I mean by this is that these files has no special protections in place to prevent them from being read by those who are not meant to read them.
-If I was charged with keeping these pieces of information hidden, I would be sure to encrypt the files with a tool such as PGP.
 
+\paragraph{}
+\begin{adjustwidth}{1.5cm}{1.5cm}
+	Security recommendations regarding the storing of sensitive information:
+	\begin{enumerate}
+		\item If I was charged with keeping these pieces of information hidden, I would be sure to encrypt the files with a tool such as PGP.
+	\end{enumerate}
+\end{adjustwidth}
 \newpage
 
 \section{Conclusions}
