@@ -24,7 +24,7 @@ Lorem ipsum.
 
 \subsection{Discovering hosts with nmap}
 \paragraph{}
-I used the following commands during the host discorvery process:
+I used the following commands during the host discovery process:
 
 \texttt{nmap -sn 192.168.100.1}
 
@@ -214,7 +214,7 @@ Below is a collection of what appear to be planning documents for the Death Star
 \end{figure}
 
 \paragraph{}
-The two images below, containing information about Rebel spacerafts, were found in the server directory \texttt{/home/general\_veers/rebel-information}.
+The two images below, containing information about Rebel spacecraft, were found in the server directory \texttt{/home/general\_veers/rebel-information}.
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{resources/plans/rebel-alliance-fleet-1.jpg}
@@ -238,7 +238,7 @@ It is my firm belief that the image below will be of great value to the Rebel Al
 \end{figure}
 
 \paragraph{}
-I was also able to recover the following photograph. It appears to be from the meeting in which the Death Star was first designed and was located in the server directoy \texttt{/home/darth\_vader}.
+I was also able to recover the following photograph. It appears to be from the meeting in which the Death Star was first designed and was located in the server directory \texttt{/home/darth\_vader}.
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{resources/plans/i-love-my-death-star.jpg}
@@ -255,9 +255,9 @@ Lorem ipsum.
 % Ubuntu 14.04 LTS nearing end-of-life, upgrade to 18.04 LTS
 \subsection{Upgrade Operating System}
 \paragraph{}
-The operating system on the Death Star server was Ubuntu 14.04 LTS, which is due to stop recieving security updates in April 2019.
+The operating system on the Death Star server was Ubuntu 14.04 LTS, which is due to stop receiving security updates in April 2019.
 Because of this, it is imperative that the operating system is upgraded to a new version.
-I would recommend installing Ubuntu 18.04 LTS,  which will recieve security updates untill 2023.
+I would recommend installing Ubuntu 18.04 LTS,  which will receive security updates until 2023.
 Additionally, installations of Ubuntu can be upgraded to later releases via the command line by use of the \texttt{do-release-upgrade} command.
 
 % Unpatched software contains vulnerabilities
@@ -269,15 +269,18 @@ Many of the services provided by the Death Star server were running outdated sof
 % No firewall / packet filtering - do that
 \subsection{Firewall}
 \paragraph{}
-Lorem ipsum.
+The Death Star server did not have any kind of firewall, allowing an attacker to easily scan every port on the system and send malicious data packets to the server.
+I would recommend the installation of a physical firewall, ideally running an OS designed for the purpose of being a firewall/router such as pfSense.
+If the budget does not allow this, some kind of packet-filtering process should be implemented on the server.
+I personally can vouch for the use of iptables, a software firewall that is available on virtually every Linux distribution. 
 
 % darth_vader wrote script to sql-inject payroll app
 \subsection{Insider Threats}
 \paragraph{}
 During my investigation, I found a questionable Ruby script in the \texttt{/home/darth\_vader} folder, implying that they were created by this user.
-Upon analysing the contents of the file, it appears to perform an SQL-injection attack on the Death Star's payroll app (see section 5.7).
+Upon analysing the contents of the file, it appears to perform an SQL injection attack on the Death Star's payroll app (see section 5.7).
 All of this implies that there is a rogue employee of the Empire using the Death Star server.
-\emph{This cannot be ignored and must be investigated.} 
+\emph{This cannot be ignored and must be investigated as soon as possible.} 
 
 % /etc/shadow, MySQL, writing passwords down in plaintext
 \subsection{Insecure Password Storage}
