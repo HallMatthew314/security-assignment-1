@@ -28,27 +28,23 @@ Lorem ipsum.
 \label{subsec:discovering_hosts}
 \paragraph{}
 I used the following commands during the host discovery process:
-
-\texttt{nmap -sn 192.168.100.1}
-
-The above command identifies hosts with IP addresses in the network space of 192.168.100.0/24
-
-\texttt{nmap -O 192.168.100.1}
-
-The above command attempts to identify the operating system of the host with address 192.168.100.1
-
-\texttt{nmap -O 192.168.100.115}
-
-The above command attempts to identify the operating system of the host with address 192.168.100.115
-
-\texttt{nmap -O 192.168.100.253}
-
-The above command attempts to identify the operating system of the host with address 192.168.100.253
+\begin{adjustwidth}{-1cm}{}
+\begin{verbatim}
+# identifies hosts with IP addresses in the network space of 192.168.100.0/24
+nmap -sn 192.168.100.1
+# attempts to identify the operating system of the host with address 192.168.100.1
+nmap -O 192.168.100.1
+# attempts to identify the operating system of the host with address 192.168.100.115
+nmap -O 192.168.100.115
+# attempts to identify the operating system of the host with address 192.168.100.253
+nmap -O 192.168.100.253
+\end{verbatim}
+\end{adjustwidth}
 
 \subsection{Network Diagram}
 \label{subsec:network_diagram}
 \begin{figure}[h!]
-	\includegraphics[width=\linewidth]{resources/network-diagram.png}
+	\includegraphics[width=\linewidth]{resources/network-diagram-new.png}
 	\caption{Network diagram of address space \texttt{192.168.100.0/24}}
 	\label{fig:network_diagram}
 \end{figure}
@@ -56,7 +52,14 @@ The above command attempts to identify the operating system of the host with add
 \subsection{Target Machine Information}
 \label{subsec:target_info}
 \paragraph{}
-Lorem ipsum.
+\begin{itemize}
+	\item \textbf{Target hostname}: \texttt{death-star}
+	\item \textbf{Target IP address}: \texttt{192.168.100.253}
+	\item \textbf{Target MAC address}: \texttt{00:50:56:86:F2:31}
+	\item \textbf{Target MAC vendor}: \texttt{VMWare}
+	\item \textbf{Operating System version}: \texttt{Ubuntu 14.04.01 LTS "Trusty Tahr"}
+	\item \textbf{Linux Kernel version}: \texttt{3.13}
+\end{itemize}
 
 \newpage
 
