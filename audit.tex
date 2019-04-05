@@ -2,6 +2,7 @@
 \usepackage{changepage}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage[export]{adjustbox}
 
 \title{IN618 - Security Assignment 1: Security Audit Report for the Deathstar Server}
 \author{Prepared by Matthew Hall}
@@ -59,7 +60,7 @@ Lorem ipsum.
 
 \newpage
 
-\section{Open Port and Running Services}
+\section{Open Ports and Running Services}
 \label{sec:services}
 \paragraph{}
 By use of the nmap command \texttt{nmap -sV 192.168.100.253}, I was able to retrieve the following information about what services on the target machine are running on what ports:
@@ -347,17 +348,17 @@ The input that I used to extract the following data was:
 \begin{verbatim}
 ' UNION(SELECT username,password,3,4 FROM payroll.users);--
 \end{verbatim}
-%\begin{figure}[H]
-%	\includegraphics[width=\linewidth]{resources/sql_injection.png}
-%	\caption{Results from SQL injection}
-%	\label{fig:sql_injection}
-%\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth, frame]{resources/sql_injection.png}
+	\caption{Results from SQL injection}
+	\label{fig:sql_injection}
+\end{figure}
 This can be fixed by changing the app's code to use prepared statements, which are currently considered the safe way to interact with a database via a web form.
 
 \paragraph{}
 Finally, as you may have deduced from the screenshot above (figure~\ref{fig:sql_injection}), the app stores the user's passwords in plaintext.
 This is incredibly bad practice for a number of reasons.
-For one, users tend to reuse the same password for multiple services\footnote{Even though they shouldn't} (see section~\ref{sebsec:bad_passwords}), which means an attacker can find passwords on insecure websites and login on other websites using the same username and password combination.
+For one, users tend to reuse the same password for multiple services\footnote{Even though they shouldn't} (see section~\ref{subsec:bad_passwords}), which means an attacker can find passwords on insecure websites and login on other websites using the same username and password combination.
 Also, a rogue insider (which you may have, section~\ref{subsec:inside_threats}) with access to the database can gain access much more easily than an outside attacker, meaning they can steal the passwords of everyone using the app.
 Additionally, should you offer the ability for a user to click a 'I forgot my password' button and send them their password via email, the email could be intercepted and the password stolen that way.
 Ultimately, the following actions need to be taken regarding the payroll app:
