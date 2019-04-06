@@ -127,27 +127,82 @@ The following services on the target machine had exploitable vulnerabilities:
 \subsection{ProFTPD 1.3.5 (port 21/tcp)}
 \label{subsec:pro_ftpd}
 \paragraph{}
+Service Summary:
+\begin{itemize}
+	\item Protocol: File Transfer Protocol (FTP)
+	\item Port Number: 21/tcp
+	\item Software Name: ProFTPD
+	\item Software Version: 1.3.5
+\end{itemize}
+Exploit Summary:
+\begin{itemize}
+	\item Exploit Platform: Metasploit Framework
+	\item Exploit Name: \texttt{exploit/unix/ftp/proftpd\_modcopy\_exec}
+	\item URL: https://www.rapid7.com/db/modules/exploit/unix/ftp/proftpd\_modcopy\_exec
+	\item Exploit Result: Successful (remote FTP session as \texttt{www-data} user)
+	\item Reference Number: CVE-2015-3306
+	\item Exploit Severity: High
+\end{itemize}
+
+\paragraph{}
 Version 1.3.5 of ProFTPD has vulnerability \emph{CVE-2015-3306}, which allows attackers to read and write to arbitrary files via the \texttt{site cpfr} and \texttt{site cpto} commands \parencite{mitre20153306}.
-Metasploit has the module \texttt{exploit/unix/ftp/proftpd\_modcopy\_exec} which exploits this flaw.
-By using this module and specifying the \texttt{SITEPATH} option to be \texttt{/var/www/html}, I was able to remotely log in to the machine as the \texttt{www-data} user.
-While logged in, I was able to download files in the \texttt{/var/www/html} directory\footnote{Among those files was the administrator account details of the phpMyAdmin service} and traverse the rest of the filesystem after starting an interactive shell.
+By using the Metasploit Framework module given above and specifying the \texttt{SITEPATH} option to be \texttt{/var/www/html}, I was able to remotely log in to the machine as the \texttt{www-data} user.
+While logged in, I was able to download files in the \texttt{/var/www/html} directory.
+Among those files was the administrator account details of the phpMyAdmin service and MySQL database.
+I was also able to traverse the rest of the filesystem after starting an interactive shell.
 
 % Ports 6667/tcp, 6697/tcp and 8067/tcp
 \subsection{UnrealIRCd 3.2.8.1 (port 6667/tcp)}
 \label{subsec:unreal_ircd}
 \paragraph{}
-During the period of time from November 2009 to June 2010, version 3.2.8.1 of UnrealIRCd contained \emph{CVE-2010-2075}: a backdoor allowing remote attackers to login to the system and execute arbitrary commands.\footnote{https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2075}
-This vulnerability was only present in copies of the software downloaded from particular mirror sites.
-This backdoor, if present, can be exploited with metasploit module \texttt{exploit/unix/irc/unreal\_irc\_3281\_backdoor}.
-Using this exploit, I was able to remotely log in to the machine as the \texttt{boba\_fett} user\footnote{This user had a text file in their home directory containing the login information for the \texttt{darth\_vader} user.} and use the machine as if I were in an ssh session, all without having to supply a password.
+Service Summary:
+\begin{itemize}
+	\item Protocol: Internet Relay Chat (IRC)
+	\item Port Number: 6667/tcp
+	\item Software Name: UnrealIRCd
+	\item Software Version: 3.2.8.1
+\end{itemize}
+Exploit Summary:
+\begin{itemize}
+	\item Exploit Platform: Metasploit Framework
+	\item Exploit Name: \texttt{exploit/unix/irc/unreal\_irc\_3281\_backdoor}
+	\item URL: https://www.rapid7.com/db/modules/exploit/unix/irc/unreal\_irc\_3281\_backdoor
+	\item Exploit Result: Successful (remote ssh session as \texttt{boba\_fett} user)
+	\item Reference Number: CVE-2010-2075
+	\item Exploit Severity: \emph{Critical}
+\end{itemize}
+
+\paragraph{}
+During the period of time from November 2009 to June 2010, version 3.2.8.1 of UnrealIRCd contained \emph{CVE-2010-2075}: a backdoor allowing remote attackers to login to the system and execute arbitrary commands.
+This vulnerability was only present in copies of the software downloaded from particular mirror sites \parencite{mitre20102075}.
+This backdoor, if present, can be exploited to open a remote terminal on the target machine.
+Using exploit given above, I was able to remotely log in to the machine as the \texttt{boba\_fett} user\footnote{This user had a text file in their home directory containing the login information for the \texttt{darth\_vader} user, see section~\ref{subsec:bad_passwords}.} and use the machine as if I were in a normal ssh session, all without having to supply a password.
 
 % Port 8080/tcp
 \subsection{Apache Continuum 1.4.2 (port 8080/tcp)}
 \label{subsec:apache_continuum}
 \paragraph{}
+Service Summary:
+\begin{itemize}
+	\item Protocol: Hypertext Transfer Protocol (HTTP)
+	\item Port Number: 8080/tcp
+	\item Software Name: Apache Continuum
+	\item Software Version: 1.4.2
+\end{itemize}
+Exploit Summary:
+\begin{itemize}
+	\item Exploit Platform: Metasploit Framework
+	\item Exploit Name: \texttt{exploit/linux/http/apache\_continuum\_cmd\_exec}
+	\item URL: https://www.rapid7.com/db/modules/exploit/linux/http/apache\_continuum\_cmd\_exec
+	\item Exploit Result: Successful (remote ssh session as \texttt{root} user)
+	\item Reference Number: EDB-39886
+	\item Exploit Severity: \emph{Critical}
+\end{itemize}
+
+\paragraph{}
 The server was hosting the Jetty web server (verison 8.1.7v20120910) on port 8080, which was running Apache Continuum 1.4.2.
-This version of Continuum has vulnerability \emph{EDB-39886}, which allows attackers to perform arbitrary code injection\footnote{https://www.exploit-db.com/exploits/39886}.
-I was able to exploit this using the metasploit module \texttt{exploit/linux/http/apache\_continuum\_cmd\_exec}.
+This version of Continuum has vulnerability \emph{EDB-39886}, which allows attackers to perform arbitrary code injection via a remote shell \parencite{exploitdb39886}.
+I was able to exploit this using the above mentioned Metasploit Framework module.
 Using this exploit, I was granted root access to the machine and was able to read and download root-only files, including the \texttt{/etc/shadow} file as well as the server's private ssh keys.
 I was able to do all of this without supplying a password.
 
