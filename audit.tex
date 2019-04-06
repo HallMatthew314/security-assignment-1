@@ -3,6 +3,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage[export]{adjustbox}
+\usepackage[toc,page]{appendix}
 
 \title{IN618 - Security Assignment 1: Security Audit Report for the Deathstar Server}
 \author{Prepared by Matthew Hall}
@@ -202,70 +203,46 @@ The others were found in their salted md5crypt form and were recovered with hash
 \subsection{Plans of the Empire}
 \label{subsec:empire_plans}
 \paragraph{}
-Below is a collection of what appear to be planning documents for the Death Star. These documents also relate to its crew and personnel. I was able to locate these files in the server directory \texttt{/home/death\_star\_admin/death-star\_plans}.
-
-\begin{figure}[H]
-	\includegraphics[width=\linewidth]{resources/plans/deathstar-crafts.png}
-	\caption{\texttt{deathstar-crafts.png}}
-	\label{fig:deathstar_crafts}
-\end{figure}
-
-\begin{figure}[H]
-	\includegraphics[width=\linewidth]{resources/plans/deathstar-cross-section.png}
-	\caption{\texttt{deathstar-cross-section.png}}
-	\label{fig:deathstar-cross_section}
-\end{figure}
-
-\begin{figure}[H]
-	\includegraphics[width=\linewidth]{resources/plans/deathstar-operations.png}
-	\caption{\texttt{deathstar-operations.png}}
-	\label{fig:deathstar_operations}
-\end{figure}
-
-\begin{figure}[H]
-	\includegraphics[width=\linewidth]{resources/plans/deathstar-summary.png}
-	\caption{\texttt{deathstar-summary.png}}
-	\label{fig:deathstar_summary}
-\end{figure}
-
-\begin{figure}[H]
-	\includegraphics[width=\linewidth]{resources/plans/deathstar-technical-specs-diagram.png}
-	\caption{\texttt{deathstar-techincal-specs-diagram.png}}
-	\label{fig:deathstar_technical_specs_diagram}
-\end{figure}
+In order to locate the requested intelligence files, I used the following command:
+\begin{verbatim}
+root@deathstar:/# locate -i --regex '(death|rebel)[_-]?(star|alliance)'
+\end{verbatim}
+Below are the names and locations of the extracted intelligence files. The contents of the files can be found in the Intelligence Appendix (Appendix~\ref{appendix:intelligence}).
 
 \paragraph{}
-The two images below, containing information about Rebel spacecraft, were found in the server directory \texttt{/home/general\_veers/rebel-information}.
-
-\begin{figure}[H]
-	\includegraphics[width=\linewidth]{resources/plans/rebel-alliance-fleet-1.jpg}
-	\caption{\texttt{rebel-alliance-fleet-1.jpg}}
-	\label{fig:rebel_alliance_fleet_1}
-\end{figure}
-
-\begin{figure}[H]
-	\includegraphics[width=\linewidth]{resources/plans/rebel-alliance-fleet-2.jpg}
-	\caption{\texttt{rebel-alliance-fleet-2.jpg}}
-	\label{fig:rebel_alliance_fleet_2}
-\end{figure}
+In the directory \texttt{/home/death\_star\_admin/death-star\_plans}:
+\begin{itemize}
+	\item \texttt{deathstar-crafts.png}, Figure~\ref{fig:deathstar_crafts}
+	\item \texttt{deathstar-cross-section.png}, Figure~\ref{fig:deathstar_cross_section}
+	\item \texttt{deathstar-operations.png}, Figure~\ref{fig:deathstar_operations}
+	\item \texttt{deathstar-summary.png}, Figure~\ref{fig:deathstar_summary}
+	\item \texttt{deathstar-techincal-specs-diagram.png}, Figure~\ref{fig:deathstar_technical_specs_diagram}
+\end{itemize}
 
 \paragraph{}
-It is my firm belief that the image below will be of great value to the Rebel Alliance. It was located in the server directory \texttt{/home/darth\_sidious}.
-
-\begin{figure}[H]
-	\includegraphics[width=\linewidth]{resources/plans/death-star-weakness.png}
-	\caption{\texttt{death-star-weakness.png}}
-	\label{fig:death_star_weakness}
-\end{figure}
+In the directory \texttt{/home/general\_veers/rebel-information}:
+\begin{itemize}
+	\item \texttt{rebel-alliance-fleet-1.jpg}, Figure~\ref{fig:rebel_alliance_fleet_1}
+	\item \texttt{rebel-alliance-fleet-2.jpg}, Figure~\ref{fig:rebel_alliance_fleet_2}
+\end{itemize}
 
 \paragraph{}
-I was also able to recover the following photograph. It appears to be from the meeting in which the Death Star was first designed and was located in the server directory \texttt{/home/darth\_vader}.
+In the directory \texttt{/home/darth\_sidious}:
+\begin{itemize}
+	\item \texttt{death-star-weakness.png}, Figure~\ref{fig:death_star_weakness}
+\end{itemize}
 
-\begin{figure}[H]
-	\includegraphics[width=\linewidth]{resources/plans/i-love-my-death-star.jpg}
-	\caption{\texttt{i-love-my-death-star.jpg}}
-	\label{fig:i_love_my_death_star}
-\end{figure}
+\paragraph{}
+In the directory \texttt{/home/darth\_vader}:
+\begin{itemize}
+	\item \texttt{i-love-my-death-star.jpg}, Figure~\ref{fig:i_love_my_death_star}
+\end{itemize}
+
+\paragraph{}
+In the directory \text{/opt/proftpd/share/locale}
+\begin{itemize}
+	\item \texttt{deathstarinfographic.pNg}, Figure~\ref{fig:i_love_my_death_star}
+\end{itemize}
 
 \newpage
 
@@ -454,4 +431,65 @@ A total of three security vulnerabilities were discovered and exploited successf
 This is an incredibly insecure server and drastic measures would need to be taken to mitigate the security risks present and secure the sensitive information stored on the system.
 The security recommendations given in this report should be applied to the machines of the Rebel Alliance and then another security audit should be performed to re-asses the security of their servers.
 
+\newpage
+
+\begin{appendices}
+\section{Intelligence Appendix}
+\label{appendix:intelligence}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{resources/plans/deathstar-crafts.png}
+	\caption{\texttt{deathstar-crafts.png}}
+	\label{fig:deathstar_crafts}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{resources/plans/deathstar-cross-section.png}
+	\caption{\texttt{deathstar-cross-section.png}}
+	\label{fig:deathstar_cross_section}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{resources/plans/deathstar-operations.png}
+	\caption{\texttt{deathstar-operations.png}}
+	\label{fig:deathstar_operations}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{resources/plans/deathstar-summary.png}
+	\caption{\texttt{deathstar-summary.png}}
+	\label{fig:deathstar_summary}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{resources/plans/deathstar-technical-specs-diagram.png}
+	\caption{\texttt{deathstar-techincal-specs-diagram.png}}
+	\label{fig:deathstar_technical_specs_diagram}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{resources/plans/rebel-alliance-fleet-1.jpg}
+	\caption{\texttt{rebel-alliance-fleet-1.jpg}}
+	\label{fig:rebel_alliance_fleet_1}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{resources/plans/rebel-alliance-fleet-2.jpg}
+	\caption{\texttt{rebel-alliance-fleet-2.jpg}}
+	\label{fig:rebel_alliance_fleet_2}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{resources/plans/death-star-weakness.png}
+	\caption{\texttt{death-star-weakness.png}}
+	\label{fig:death_star_weakness}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{resources/plans/i-love-my-death-star.jpg}
+	\caption{\texttt{i-love-my-death-star.jpg}}
+	\label{fig:i_love_my_death_star}
+\end{figure}
+
+\end{appendices}
 \end{document}
