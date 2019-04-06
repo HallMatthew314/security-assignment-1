@@ -138,7 +138,7 @@ Exploit Summary:
 \begin{itemize}
 	\item Exploit Platform: Metasploit Framework
 	\item Exploit Name: \texttt{exploit/unix/ftp/proftpd\_modcopy\_exec}
-	\item URL: https://www.rapid7.com/db/modules/exploit/unix/ftp/proftpd\_modcopy\_exec
+	\item URL: \url{https://www.rapid7.com/db/modules/exploit/unix/ftp/proftpd\_modcopy\_exec}
 	\item Exploit Result: Successful (remote FTP session as \texttt{www-data} user)
 	\item Reference Number: CVE-2015-3306
 	\item Exploit Severity: High
@@ -166,7 +166,7 @@ Exploit Summary:
 \begin{itemize}
 	\item Exploit Platform: Metasploit Framework
 	\item Exploit Name: \texttt{exploit/unix/irc/unreal\_irc\_3281\_backdoor}
-	\item URL: https://www.rapid7.com/db/modules/exploit/unix/irc/unreal\_irc\_3281\_backdoor
+	\item URL: \url{https://www.rapid7.com/db/modules/exploit/unix/irc/unreal\_irc\_3281\_backdoor}
 	\item Exploit Result: Successful (remote ssh session as \texttt{boba\_fett} user)
 	\item Reference Number: CVE-2010-2075
 	\item Exploit Severity: \emph{Critical}
@@ -193,15 +193,15 @@ Exploit Summary:
 \begin{itemize}
 	\item Exploit Platform: Metasploit Framework
 	\item Exploit Name: \texttt{exploit/linux/http/apache\_continuum\_cmd\_exec}
-	\item URL: https://www.rapid7.com/db/modules/exploit/linux/http/apache\_continuum\_cmd\_exec
+	\item URL: \url{https://www.rapid7.com/db/modules/exploit/linux/http/apache\_continuum\_cmd\_exec}
 	\item Exploit Result: Successful (remote ssh session as \texttt{root} user)
 	\item Reference Number: EDB-39886
 	\item Exploit Severity: \emph{Critical}
 \end{itemize}
 
 \paragraph{}
-The server was hosting the Jetty web server (verison 8.1.7v20120910) on port 8080, which was running Apache Continuum 1.4.2.
-This version of Continuum has vulnerability \emph{EDB-39886}, which allows attackers to perform arbitrary code injection via a remote shell \parencite{exploitdb39886}.
+The server was hosting the Jetty web server (verison 8.1.7v20120910) on port 8080, which was running the discontinued piece fo software Apache Continuum 1.4.2.
+This version of Apache Continuum has vulnerability \emph{EDB-39886}, which allows attackers to perform arbitrary code injection via a remote shell \parencite{exploitdb39886}.
 I was able to exploit this using the above mentioned Metasploit Framework module.
 Using this exploit, I was granted root access to the machine and was able to read and download root-only files, including the \texttt{/etc/shadow} file as well as the server's private ssh keys.
 I was able to do all of this without supplying a password.
@@ -316,7 +316,7 @@ Here I have compiled the details of all of the security flaws I could find with 
 \subsection{Upgrade Operating System}
 \label{subsec:upgrade_os}
 \paragraph{}
-The operating system on the Death Star server was Ubuntu 14.04 LTS, which is due to stop receiving security updates in April 2019.
+The operating system on the Death Star server was Ubuntu 14.04 LTS, which is due to stop receiving security updates in April 2019 \parencite{ubuntureleases}.
 Because of this, it is imperative that the operating system is upgraded to a new version.
 
 \paragraph{}
@@ -332,6 +332,7 @@ Because of this, it is imperative that the operating system is upgraded to a new
 \label{subsec:upgrade_software}
 \paragraph{}
 Many of the services provided by the Death Star server were running outdated software that contained vulnerabilities.
+Some pieces of software have even stopped receiving updates altogether (see section~\ref{subsec:apache_continuum}).
 Out-of-date software is much more likely to contain vulnerabilities than up-to-date versions.
 
 \paragraph{}
@@ -393,7 +394,7 @@ I was able to log in as the \texttt{captain\_needa} and \texttt{boba\_fett} user
 \paragraph{}
 The third method I used\footnote{And expected to use} was password cracking. By using the \texttt{hashcat} tool I was able to crack the remaining user's passwords with two dictionary attacks (see section~\ref{subsec:login_details}).
 Using a relatively powerful GPU\footnote{A GTX 1050ti} I successfully recovered the remaining passwords with roughly 20 minutes of computing time.
-This is due to two problems with the password on the server.
+This is due to two problems with the passwords on the server.
 The first problem is that the user's passwords were relatively common passwords, whether the users were aware of this or not.
 The second problem is that the passwords were hashed+salted using md5crypt.
 This hashing algorithm is too fast to be used for storing passwords and should not have been used on the server.
@@ -417,7 +418,7 @@ This is a problem because if a hashing algorithm is too fast, it becomes easy fo
 \end{adjustwidth}
 
 \paragraph{}
-A reasonable technique for making a password is as follows:
+A reasonable technique for making a password is as follows \parencite{computerphilechoosepassword}:
 \begin{enumerate}
 	\item Choose three random, 8-10 letter words
 	\item Choose another reasonably long, more obscure word (or even a made-up word)
