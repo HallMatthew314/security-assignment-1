@@ -1,9 +1,13 @@
 \documentclass{article}
+
 \usepackage{changepage}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage[export]{adjustbox}
 \usepackage[toc,page]{appendix}
+\usepackage[backend=biber, style=authoryear-icomp]{biblatex}
+
+\addbibresource{~/Documents/latex_bibliography.bib}
 
 \title{IN618 - Security Assignment 1: Security Audit Report for the Deathstar Server}
 \author{Prepared by Matthew Hall}
@@ -123,7 +127,7 @@ The following services on the target machine had exploitable vulnerabilities:
 \subsection{ProFTPD 1.3.5 (port 21/tcp)}
 \label{subsec:pro_ftpd}
 \paragraph{}
-Version 1.3.5 of ProFTPD has vulnerability \emph{CVE-2015-3306}, which allows attackers to read and write to arbitrary files via the \texttt{site cpfr} and \texttt{site cpto} commands.\footnote{https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3306}
+Version 1.3.5 of ProFTPD has vulnerability \emph{CVE-2015-3306}, which allows attackers to read and write to arbitrary files via the \texttt{site cpfr} and \texttt{site cpto} commands \parencite{mitre20153306}.
 Metasploit has the module \texttt{exploit/unix/ftp/proftpd\_modcopy\_exec} which exploits this flaw.
 By using this module and specifying the \texttt{SITEPATH} option to be \texttt{/var/www/html}, I was able to remotely log in to the machine as the \texttt{www-data} user.
 While logged in, I was able to download files in the \texttt{/var/www/html} directory\footnote{Among those files was the administrator account details of the phpMyAdmin service} and traverse the rest of the filesystem after starting an interactive shell.
@@ -431,6 +435,8 @@ A total of three security vulnerabilities were discovered and exploited successf
 This is an incredibly insecure server and drastic measures would need to be taken to mitigate the security risks present and secure the sensitive information stored on the system.
 The security recommendations given in this report should be applied to the machines of the Rebel Alliance and then another security audit should be performed to re-asses the security of their servers.
 
+\newpage
+\printbibliography
 \newpage
 
 \begin{appendices}

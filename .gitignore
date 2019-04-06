@@ -2,3 +2,7 @@ audit.aux
 audit.log
 audit.pdf
 audit.toc
+*
+!.gitignore
+!audit.tex
+!resources/*
