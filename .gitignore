@@ -1,10 +1,7 @@
-audit.aux
-audit.log
-audit.pdf
-audit.toc
 *
 !.gitignore
 !audit.tex
+!IN618-Security-A1-SelfAssessment.docx
 !resources/
 !resources/*
 !resources/*/*
