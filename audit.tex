@@ -16,7 +16,7 @@
 
 \addbibresource{~/Documents/latex-bibliography/bibliography.bib}
 
-\title{IN618 - Security Assignment 1: Security Audit Report for the Deathstar Server}
+\title{IN618 - Security Assignment 1: Security Audit Report for the Death Star Server}
 \author{Prepared by Matthew Hall}
 \date{} % no date
 
@@ -29,8 +29,8 @@ This document summarises the findings from an independent security audit commiss
 A total of three security vulnerabilities were discovered and exploited successfully along with numerous unexploited vulnerabilities.
 All three of these exploits can be used to great effect to gain unauthorized access to the target server.
 One of these granted a remote shell as the root user.
-Nine out of ten requested pieces of intelligence were recovered.
-The system's password file was extracted and all user passwords, in one way or another, were cracked.
+All ten requested pieces of intelligence were recovered.
+The system's password file was extracted and all user passwords, in one way or another, were recovered.
 
 Recommendations to improve security include ensuring the patching of out-of-date software, implementing a firewall, investigating for rogue employees, implementing a strict password policy, redesigning a web app hosted on the server and the encryption of sensitive information.
 \end{abstract}
@@ -49,7 +49,7 @@ I used the following commands during the host discovery process:
 \begin{adjustwidth}{-1cm}{}
 \begin{verbatim}
 # identifies hosts with IP addresses in the network space of 192.168.100.0/24
-nmap -sn 192.168.100.1
+nmap -sn 192.168.100.0/24
 # attempts to identify the operating system of the host with address 192.168.100.1
 nmap -O 192.168.100.1
 # attempts to identify the operating system of the host with address 192.168.100.115
@@ -154,7 +154,7 @@ Exploit Summary:
 Version 1.3.5 of ProFTPD has vulnerability \emph{CVE-2015-3306}, which allows attackers to read and write to arbitrary files via the \texttt{site cpfr} and \texttt{site cpto} commands \parencite{mitre20153306}.
 By using the Metasploit Framework module given above and specifying the \texttt{SITEPATH} option to be \texttt{/var/www/html}, I was able to remotely log in to the machine as the \texttt{www-data} user.
 While logged in, I was able to download files in the \texttt{/var/www/html} directory.
-Among those files was the administrator account details of the phpMyAdmin service and MySQL database.
+Among those files was the administrator account details of the phpMyAdmin service and MySQL database management system (see section~\ref{subsec:payroll_app}).
 I was also able to traverse the rest of the filesystem after starting an interactive shell.
 
 % Ports 6667/tcp, 6697/tcp and 8067/tcp
@@ -206,9 +206,9 @@ Exploit Summary:
 \end{itemize}
 
 \paragraph{}
-The server was hosting the Jetty web server (verison 8.1.7v20120910) on port 8080, which was running the discontinued piece fo software Apache Continuum 1.4.2.
+The server was hosting the Jetty web server (version 8.1.7v20120910) on port 8080/tcp, which was running the discontinued piece of software Apache Continuum 1.4.2.
 This version of Apache Continuum has vulnerability \emph{EDB-39886}, which allows attackers to perform arbitrary code injection via a remote shell \parencite{exploitdb39886}.
-I was able to exploit this using the above mentioned Metasploit Framework module.
+I was able to exploit this using the Metasploit Framework module mentioned above.
 Using this exploit, I was granted root access to the machine and was able to read and download root-only files, including the \texttt{/etc/shadow} file as well as the server's private ssh keys.
 I was able to do all of this without supplying a password.
 
@@ -221,6 +221,8 @@ As requested, I have located and extracted both the login details of every user 
 
 \subsection{Login Details}
 \label{subsec:login_details}
+\paragraph{}
+Below are the login details for every user account on the Death Star server, along with password hashes and salts represented as base64 encoded strings.
 \begin{adjustwidth}{-1.5cm}{}
 \begin{tabular}{ |c|c|c|c| }
 \hline
@@ -238,7 +240,7 @@ storm\_trooper\_5 & Password1234567 & \texttt{w6VyqglDCJot.Xeb9slLI0} & \texttt{
 \hline
 imperial\_guards & starwars4life & \texttt{ebSf18qOk7tgu.iMqf.bi/} & \texttt{v9GI28ar} \\
 \hline
-captain\_needa & \emph{darksidegod@hotmail.com} & \texttt{FO9c2OF4Qf1onEyYkq.gK/} & \texttt{VtXabEV0} \\
+captain\_needa & \textit{darksidegod@hotmail.com} & \texttt{FO9c2OF4Qf1onEyYkq.gK/} & \texttt{VtXabEV0} \\
 \hline
 admiral\_piett & darksideofthemoon & \texttt{cTG0isRNogwyCeQwCZJXF.} & \texttt{D06DmZeK} \\
 \hline
@@ -250,11 +252,11 @@ emperor\_palpatine & 912Deathstars & \texttt{hy9v3MmcpwRq/G3Dhtu2U1} & \texttt{S
 \hline
 darth\_sidious & 7ujMko0admin & \texttt{Mp7O4bzX8bmWsGGV8ZrVY0} & \texttt{TyPfW4pp} \\
 \hline
-boba\_fett & \emph{bountyhunter1976} & \texttt{GfHV875pepnKEg.JC.zYY/} & \texttt{eOF0T0eZ} \\
+boba\_fett & \textit{bountyhunter1976} & \texttt{GfHV875pepnKEg.JC.zYY/} & \texttt{eOF0T0eZ} \\
 \hline
 death\_star\_admin & \textless 3DeathStars\textless 3 & \texttt{erKQWB6ZTfw2efmZMPDME.} & \texttt{HnIyNzWr} \\
 \hline
-darth\_vader & \emph{daddy\_issues-7733} & \texttt{0TkhYTZFnI1srHEzG1TrO/} & \texttt{AnAm41bc} \\
+darth\_vader & \textit{daddy\_issues-7733} & \texttt{0TkhYTZFnI1srHEzG1TrO/} & \texttt{AnAm41bc} \\
 \hline
 \end{tabular}
 \end{adjustwidth}
@@ -262,6 +264,7 @@ darth\_vader & \emph{daddy\_issues-7733} & \texttt{0TkhYTZFnI1srHEzG1TrO/} & \te
 \paragraph{}
 The plaintext passwords that are written in italics were found in plaintext form (see section~\ref{subsec:bad_passwords}).
 The others were found in their salted md5crypt form and were recovered with hashcat using the rockyou dictionary and the \texttt{default\_pass\_for\_services\_unhash} dictionary included in Metasploit.
+Fourteen out of fifteen passwords were able to be recovered with the use of hashcat.
 
 \newpage
 
@@ -281,7 +284,7 @@ In the directory \texttt{/home/death\_star\_admin/death-star\_plans}:
 	\item \texttt{deathstar-cross-section.png}, Figure~\ref{fig:deathstar_cross_section}
 	\item \texttt{deathstar-operations.png}, Figure~\ref{fig:deathstar_operations}
 	\item \texttt{deathstar-summary.png}, Figure~\ref{fig:deathstar_summary}
-	\item \texttt{deathstar-techincal-specs-diagram.png}, Figure~\ref{fig:deathstar_technical_specs_diagram}
+	\item \texttt{deathstar-technical-specs-diagram.png}, Figure~\ref{fig:deathstar_technical_specs_diagram}
 \end{itemize}
 
 \paragraph{}
@@ -304,7 +307,7 @@ In the directory \texttt{/home/darth\_vader}:
 \end{itemize}
 
 \paragraph{}
-In the directory \texttt{/opt/proftpd/share/locale}
+In the directory \texttt{/opt/proftpd/share/locale}:
 \begin{itemize}
 	\item \texttt{deathstarinfographic.pNg}, Figure~\ref{fig:deathstarinfographic}
 \end{itemize}
@@ -365,11 +368,11 @@ Because of this, an attacker could easily scan every port on the system and send
 	\end{enumerate}
 	I personally can vouch for the use of iptables, a software firewall that is available on virtually every Linux distribution.
 \end{adjustwidth}
-% darth_vader wrote script to sql-inject payroll app
+% darth_vader wrote script to sql inject payroll app
 \subsection{Inside Threats}
 \label{subsec:inside_threats}
 \paragraph{}
-During my investigation, I found a questionable Ruby script in the \texttt{/home/darth\_vader} folder, implying that they were created by this user.
+During my investigation, I found a questionable Ruby script in the \texttt{/home/darth\_vader/poc/payroll\_app} folder, implying that they were created by this user.
 Upon analysing the contents of the file, it appears to perform an SQL injection attack on the Death Star's payroll app (see section~\ref{subsec:payroll_app}).
 All of this implies that there is a rogue employee of the Empire using the Death Star server.
 
@@ -388,19 +391,23 @@ All of this implies that there is a rogue employee of the Empire using the Death
 During my attempts to recover passwords, I was able to recover passwords in three different ways.
 
 \paragraph{}
-The first method I was able to use was simply reading a user's password that was written down in a file. Incidentally, this was the password of the \texttt{darth\_vader} user.
-I was able to log in to the account with the password I found and created another account for myself in the process. I was able to do this because the \texttt{darth\_vader} user had superuser access.
+The first method I was able to use was simply reading a user's password that was written down in a file.
+Incidentally, this was the password of the \texttt{darth\_vader} user.
+I was able to log in to the account with the password I found and created another account for myself in the process.
+I was able to do this because the \texttt{darth\_vader} user had superuser access.
 
 \paragraph{}
 The second method I was able to use to recover passwords was by exploiting the payroll app.
 The payroll app on the Death Star server has numerous security issues (see section ~\ref{subsec:payroll_app}) and one of those issues was the fact that the user passwords were stored in plaintext.
 I went through each password I found in the app and attempted to log in to the corresponding user account.
-I was able to log in as the \texttt{captain\_needa} and \texttt{boba\_fett} users. Incidentally, the \texttt{boba\_fett} user was the user that had the password for \texttt{darth\_vader} in their home directory.
+By use of this method I was able to log in as the \texttt{captain\_needa} and \texttt{boba\_fett} users.
+Incidentally, the \texttt{boba\_fett} user was the user that had the password for \texttt{darth\_vader} in their home directory.
 
 \paragraph{}
 The third method I used\footnote{And expected to use} was password cracking. By using the \texttt{hashcat} tool I was able to crack the remaining user's passwords with two dictionary attacks (see section~\ref{subsec:login_details}).
 Using a relatively powerful GPU\footnote{A GTX 1050ti} I successfully recovered the remaining passwords with roughly 20 minutes of computing time.
-This is due to two problems with the passwords on the server.
+The only password I was \emph{not} able to crack belonged to the \texttt{darth\_vader} user.
+The other passwords on the server were able to be cracked because of two problems.
 The first problem is that the user's passwords were relatively common passwords, whether the users were aware of this or not.
 The second problem is that the passwords were hashed+salted using md5crypt.
 This hashing algorithm is too fast to be used for storing passwords and should not have been used on the server.
@@ -430,7 +437,8 @@ A reasonable technique for making a password is as follows \parencite{computerph
 	\item Choose another reasonably long, more obscure word (or even a made-up word)
 	\item Pick a symbol and put it between two of the words
 \end{enumerate}
-As for hashing, I would recommend using the SHA-512 algorithm instead of md5crypt, since SHA-512 is slower (and therefore harder to guess a hashed password) and practically impossible\footnote{At the time of writing} to generate a collision with this algorithm.
+As for hashing, I would recommend using the SHA-512 algorithm instead of md5crypt, since SHA-512 is slower and therefore harder to guess a hashed password.
+In addition, it is practically impossible\footnote{At the time of writing} to generate a hash collision with this algorithm.
 
 % Payroll app is insecure
 \subsection{Poorly Designed Payroll App}
@@ -438,7 +446,7 @@ As for hashing, I would recommend using the SHA-512 algorithm instead of md5cryp
 \paragraph{}
 The payroll app on the server is incredibly insecure and needs to be replaced as soon as possible.
 Firstly, the source code contains the password for the \texttt{root} account on the MySQL server.
-This means that anyone on the server can view the source code, read the password and log in as the root user.
+This means that anyone on the server could view the source code, read the password and log in as the root MySQL user.
 This can be remedied by changing the file permissions so that only the root user can view the contents of the file.
 
 \paragraph{}
@@ -457,9 +465,9 @@ This can be fixed by changing the app's code to use prepared statements, which a
 \paragraph{}
 Finally, as you may have deduced from the screenshot above (figure~\ref{fig:sql_injection}), the app stores the user's passwords in plaintext.
 This is incredibly bad practice for a number of reasons.
-For one, users tend to reuse the same password for multiple services\footnote{Even though they shouldn't} (see section~\ref{subsec:bad_passwords}), which means an attacker can find passwords on insecure websites and login on other websites using the same username and password combination.
-Also, a rogue insider (which you may have, section~\ref{subsec:inside_threats}) with access to the database can gain access much more easily than an outside attacker, meaning they can steal the passwords of everyone using the app.
-Additionally, should you offer the ability for a user to click a 'I forgot my password' button and send them their password via email, the email could be intercepted and the password stolen that way.
+For one, users tend to reuse the same password for multiple services\footnote{And in this case, they did (see section~\ref{subsec:bad_passwords})}, which means an attacker can find passwords on insecure websites and login on other websites using the same username and password combination.
+Also, a rogue insider\footnote{Which there may be in this case (see section~\ref{subsec:inside_threats})} with access to the database can gain access much more easily than an outside attacker, meaning they can steal the passwords of everyone using the app.
+Additionally, if there was the ability for a user to click a 'I forgot my password' button and send them their password via email, the email could be intercepted and the password stolen that way.
 
 \paragraph{}
 \begin{adjustwidth}{1.5cm}{1.5cm}
@@ -493,7 +501,7 @@ What I mean by this is that these files has no special protections in place to p
 \label{sec:conclusions}
 \paragraph{}
 This document summarised the findings from an independent security audit commissioned by the Rebel Alliance to investigate the Death Star server.
-A total of three security vulnerabilities were discovered and exploited successfully root access was acquired.
+A total of three security vulnerabilities were discovered and exploited successfully and root access was acquired.
 This is an incredibly insecure server and drastic measures would need to be taken to mitigate the security risks present and secure the sensitive information stored on the system.
 The security recommendations given in this report should be applied to the machines of the Rebel Alliance and then another security audit should be performed to re-asses the security of their servers.
 
@@ -531,7 +539,7 @@ The security recommendations given in this report should be applied to the machi
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{resources/plans/deathstar-technical-specs-diagram.png}
-	\caption{\texttt{deathstar-techincal-specs-diagram.png}}
+	\caption{\texttt{deathstar-technical-specs-diagram.png}}
 	\label{fig:deathstar_technical_specs_diagram}
 \end{figure}
 
