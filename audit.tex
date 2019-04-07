@@ -6,15 +6,22 @@
 \usepackage[export]{adjustbox}
 \usepackage[toc,page]{appendix}
 \usepackage[backend=biber, style=authoryear-icomp]{biblatex}
+\usepackage{fancyhdr}
 
-\addbibresource{~/Documents/latex_bibliography.bib}
+\pagestyle{fancy}
+\lhead{STUDENT CODE: HALLMG1}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\addbibresource{~/Documents/latex-bibliography/bibliography.bib}
 
 \title{IN618 - Security Assignment 1: Security Audit Report for the Deathstar Server}
 \author{Prepared by Matthew Hall}
-\date{}
+\date{} % no date
 
 \begin{document}
-\pagenumbering{gobble}
+\thispagestyle{empty}
 \maketitle
 \renewcommand{\abstractname}{Executive Summary}
 \begin{abstract}	
@@ -28,7 +35,6 @@ The system's password file was extracted and all user passwords, in one way or a
 Recommendations to improve security include ensuring the patching of out-of-date software, implementing a firewall, investigating for rogue employees, implementing a strict password policy, redesigning a web app hosted on the server and the encryption of sensitive information.
 \end{abstract}
 \newpage
-\pagenumbering{arabic}
 
 \tableofcontents
 \newpage
@@ -138,7 +144,7 @@ Exploit Summary:
 \begin{itemize}
 	\item Exploit Platform: Metasploit Framework
 	\item Exploit Name: \texttt{exploit/unix/ftp/proftpd\_modcopy\_exec}
-	\item URL: \url{https://www.rapid7.com/db/modules/exploit/unix/ftp/proftpd\_modcopy\_exec}
+	\item URL: \url{https://www.rapid7.com/db/modules/exploit/unix/ftp/proftpd_modcopy_exec}
 	\item Exploit Result: Successful (remote FTP session as \texttt{www-data} user)
 	\item Reference Number: CVE-2015-3306
 	\item Exploit Severity: High
@@ -166,7 +172,7 @@ Exploit Summary:
 \begin{itemize}
 	\item Exploit Platform: Metasploit Framework
 	\item Exploit Name: \texttt{exploit/unix/irc/unreal\_irc\_3281\_backdoor}
-	\item URL: \url{https://www.rapid7.com/db/modules/exploit/unix/irc/unreal\_irc\_3281\_backdoor}
+	\item URL: \url{https://www.rapid7.com/db/modules/exploit/unix/irc/unreal_irc_3281_backdoor}
 	\item Exploit Result: Successful (remote ssh session as \texttt{boba\_fett} user)
 	\item Reference Number: CVE-2010-2075
 	\item Exploit Severity: \emph{Critical}
@@ -193,7 +199,7 @@ Exploit Summary:
 \begin{itemize}
 	\item Exploit Platform: Metasploit Framework
 	\item Exploit Name: \texttt{exploit/linux/http/apache\_continuum\_cmd\_exec}
-	\item URL: \url{https://www.rapid7.com/db/modules/exploit/linux/http/apache\_continuum\_cmd\_exec}
+	\item URL: \url{https://www.rapid7.com/db/modules/exploit/linux/http/apache_continuum_cmd_exec}
 	\item Exploit Result: Successful (remote ssh session as \texttt{root} user)
 	\item Reference Number: EDB-39886
 	\item Exploit Severity: \emph{Critical}
